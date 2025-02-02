@@ -1,1 +1,5 @@
-console.log('Happy developing ✨')
+function sayHello() {
+    console.log('Happy developing ✨')
+}
+
+sayHello()
