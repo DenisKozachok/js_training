@@ -12,3 +12,4 @@ console.log(`Should be TRUE: ${nullVar == undefinedVar}`);
 console.log(`Should be FALSE: ${nullVar === undefinedVar}`);
 console.log(`Should be FALSE: ${false == booleanVar}`);
 console.log(`Should be TRUE: ${true === booleanVar}`);
+console.log(`Should be TRUE: ${numberVar > 5 && stringVar === 'Hello'}`);
