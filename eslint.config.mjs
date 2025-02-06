@@ -40,6 +40,8 @@ export default [
             'no-multiple-empty-lines': ['error', { max: 2 }],
             'no-trailing-spaces': ['error', { skipBlankLines: false }],
             'eol-last': ['error', 'always'],
+            'one-var-declaration-per-line': ['error', 'initializations'],
+            'prefer-const': ['error'],
             'no-var': ['error'],
             'unicorn/filename-case': [
                 'error',

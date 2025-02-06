@@ -1,28 +1,30 @@
-function isAdult(age, isStudent) {
-    switch (true) {
-        case age < 18:
-            console.log('You are a minor.');
+function userRole(role) {
+    switch (role) {
+        case 'admin':
+            console.log('You have full access as an admin');
             break;
-        case age >= 18 && age < 25 && isStudent:
-            console.log('You are a young student.');
+        case 'editor':
+            console.log('You can edit content as an editor');
             break;
-        case age >= 18 && age < 25:
-            console.log('You are a young adult.');
+        case 'viewer':
+            console.log('You can view content as a viewer');
             break;
         default:
-            console.log('You are an adult.');
+            console.log(`You have no access ${role}`);
     }
 }
 
-let myAge = 16;
-isAdult(myAge, true);
+let role = 'admin';
+userRole(role);
 
-myAge = 18;
-isAdult(myAge, true);
-isAdult(myAge, false);
+role = 'editor';
+userRole(role);
 
-myAge = 19;
-isAdult(myAge, false);
+role = 'viewer';
+userRole(role);
 
-myAge = 59;
-isAdult(myAge, false);
+role = 'guest';
+userRole(role);
+
+role = 59;
+userRole(role);

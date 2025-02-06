@@ -1,8 +1,8 @@
-let numberVar = 10;
-let stringVar = 'Hello';
-let booleanVar = true;
-let nullVar = null;
-let undefinedVar;
+const numberVar = 10;
+const stringVar = 'Hello';
+const booleanVar = true;
+const nullVar = null;
+const undefinedVar = undefined;
 
 console.log(`Should be TRUE: ${numberVar > 5}`);
 console.log(`Should be FALSE: ${numberVar} < 5}`);
