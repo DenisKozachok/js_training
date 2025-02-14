@@ -6,7 +6,7 @@ async function fetchWithFallback(primaryUrl, fallbackUrl) {
         }
         return await response.json();
     } catch (error) {
-        console.warn("Primary request failed. Trying fallback...");
+        console.error("Error fetching primary data:", error);
         try {
             const fallbackResponse = await fetch(fallbackUrl);
             if (!fallbackResponse.ok) {
@@ -14,7 +14,8 @@ async function fetchWithFallback(primaryUrl, fallbackUrl) {
             }
             return await fallbackResponse.json();
         } catch (fallbackError) {
-            throw new Error("Both primary and fallback requests failed.");
+            console.error("Error fetching fallback data:", fallbackError);
+            throw fallbackError;
         }
     }
 }
