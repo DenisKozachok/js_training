@@ -1,5 +1,7 @@
 const sumArrayArrow = (arr: (number | string)[]): number => {
-    return arr.reduce((acc, item) => acc + Number(item), 0);
+    return arr
+        .map(item => (isNaN(Number(item)) ? 0 : Number(item))) // Перетворюємо тільки коректні числа, інші робимо 0
+        .reduce((acc, num) => acc + num, 0);
 };
 
 // Приклади масивів
