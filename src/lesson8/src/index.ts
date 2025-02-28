@@ -1,5 +1,5 @@
 import { fetchUsers } from './api-service';
-import { UserSummary } from './userSummary';
+import { UserSummary } from './user-summary';
 import { DetailedUser } from './abstraction';
 
 (async () => {
