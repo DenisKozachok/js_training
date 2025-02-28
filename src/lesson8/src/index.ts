@@ -1,6 +1,6 @@
-import { fetchUsers } from './api-service';
-import { UserSummary } from './user-summary';
-import { DetailedUser } from './abstraction';
+import { fetchUsers } from './services/api-service';
+import { UserSummary } from './models/user-summary';
+import { DetailedUser } from './models/abstraction';
 
 (async () => {
     const apiResponse = await fetchUsers();
