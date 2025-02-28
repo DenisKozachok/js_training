@@ -1,23 +1,19 @@
-# Lesson 9 - OOP. Principles. SOLID
+# Jest
+Recommended testing framework base that is based on Jest
 
-## This lesson covers the following topics:
+install packages
+```
+npm i
+```
 
-1. **Object oriented programming**
-2. **OOP Principles**
-3. **SOLID Principles**
+to execute tests start 
+```
+npm run test
+```
 
-## How to Run the Code
+**In order to debug test**
+Windows:
+```npm run debug:win```
 
-To run the code, follow these steps:
-
-1. Install the necessary dependencies:
-    ```sh
-    npm install
-    ```
-
-2. Execute the JavaScript file:
-    ```sh
-    npx ts-node src/index.ts
-    ```
-
-Replace `<filename>` with the name of the JavaScript file you want to run.
+Linux & Mac
+```npm run debug:nix```

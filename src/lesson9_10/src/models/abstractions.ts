@@ -1,8 +1,8 @@
 import { Aircraft } from './interfaces';
 
 export abstract class MilitaryAircraft implements Aircraft {
-    protected model: string;
-    private speed: number;
+    public model: string; // Тепер public
+    public speed: number; // Тепер public
     private masterArm = false;
 
     protected constructor(model: string, speed: number) {
@@ -21,6 +21,7 @@ export abstract class MilitaryAircraft implements Aircraft {
         return this.masterArm;
     }
 }
+
 
 export class FighterJet extends MilitaryAircraft {
     public constructor(model: string, speed: number) {
