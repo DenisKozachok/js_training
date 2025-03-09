@@ -1,5 +1,5 @@
-import { engageAircraft } from './utils';
 import { AttackAircraft, Bomber, FighterJet } from './models/abstractions';
+import { engageAircraft, startJetEngine } from './utils';
 
 const f16 = new FighterJet('F-16 Falcon', 2400);
 const b52 = new Bomber('B-52 Stratofortress', 1000);
@@ -12,7 +12,10 @@ a10.toggleMasterArm(true);
 harrier.toggleMasterArm(false);
 
 engageAircraft(f16);
-
 engageAircraft(b52);
 engageAircraft(a10);
 engageAircraft(harrier);
+
+startJetEngine(f16);
+startJetEngine(a10);
+startJetEngine(harrier);

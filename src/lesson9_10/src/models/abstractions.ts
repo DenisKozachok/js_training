@@ -1,11 +1,9 @@
-import { Aircraft } from './interfaces';
-
-export abstract class MilitaryAircraft implements Aircraft {
-    public model: string; // Тепер public
-    public speed: number; // Тепер public
+export abstract class MilitaryAircraft {
+    public model: string;
+    public speed: number;
     private masterArm = false;
 
-    protected constructor(model: string, speed: number) {
+    public constructor(model: string, speed: number) {
         this.model = model;
         this.speed = speed;
     }
@@ -22,8 +20,11 @@ export abstract class MilitaryAircraft implements Aircraft {
     }
 }
 
+export interface JetEngine {
+    startJetEngine(): string;
+}
 
-export class FighterJet extends MilitaryAircraft {
+export class FighterJet extends MilitaryAircraft implements JetEngine {
     public constructor(model: string, speed: number) {
         super(model, speed);
     }
@@ -34,6 +35,10 @@ export class FighterJet extends MilitaryAircraft {
 
     public attack(): string {
         return this.isArmed() ? `${this.model} launches air-to-air missiles!` : 'Master arms off';
+    }
+
+    public startJetEngine(): string {
+        return `${this.model} jet engine started.`;
     }
 }
 
@@ -51,7 +56,7 @@ export class Bomber extends MilitaryAircraft {
     }
 }
 
-export class AttackAircraft extends MilitaryAircraft {
+export class AttackAircraft extends MilitaryAircraft implements JetEngine {
     public constructor(model: string, speed: number) {
         super(model, speed);
     }
@@ -62,5 +67,9 @@ export class AttackAircraft extends MilitaryAircraft {
 
     public attack(): string {
         return this.isArmed() ? `${this.model} performs a ground-attack strike!` : 'Master arms off';
+    }
+
+    public startJetEngine(): string {
+        return `${this.model} jet engine started.`;
     }
 }

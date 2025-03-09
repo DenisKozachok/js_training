@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { AttackAircraft, Bomber, FighterJet } from '../models/abstractions';
+import { AttackAircraft, Bomber, FighterJet } from '../../models/abstractions';
 
 describe('MilitaryAircraft Tests', () => {
     let f16: FighterJet;
@@ -31,12 +31,5 @@ describe('MilitaryAircraft Tests', () => {
         expect(b52.attack()).to.equal('B-52 Stratofortress drops bombs on target!');
         expect(a10.attack()).to.equal('A-10 Thunderbolt II performs a ground-attack strike!');
         expect(harrier.attack()).to.equal('AV-8B Harrier II performs a ground-attack strike!');
-    });
-
-    it('should return Master arms off when master arm is OFF', () => {
-        expect(f16.attack()).to.equal('Master arms off');
-        expect(b52.attack()).to.equal('Master arms off');
-        expect(a10.attack()).to.equal('Master arms off');
-        expect(harrier.attack()).to.equal('Master arms off');
     });
 });

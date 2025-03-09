@@ -1,8 +1,11 @@
-import { Aircraft } from './models/interfaces';
+import { JetEngine, MilitaryAircraft } from './models/abstractions';
 
-export function engageAircraft(aircraft: Aircraft): void {
+export function engageAircraft(aircraft: MilitaryAircraft): void {
     console.log(`Engaging ${aircraft.model} at speed ${aircraft.speed} km/h`);
     console.log(aircraft.takeoff());
     console.log(aircraft.attack());
-    console.log('--------------------');
+}
+
+export function startJetEngine(aircraft: JetEngine): void {
+    console.log(aircraft.startJetEngine());
 }
