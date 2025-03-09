@@ -1,11 +1,9 @@
-import { Aircraft } from './interfaces';
-
-export abstract class MilitaryAircraft implements Aircraft {
-    protected model: string;
-    private speed: number;
+export abstract class MilitaryAircraft {
+    public model: string;
+    public speed: number;
     private masterArm = false;
 
-    protected constructor(model: string, speed: number) {
+    constructor(model: string, speed: number) {
         this.model = model;
         this.speed = speed;
     }
@@ -22,8 +20,12 @@ export abstract class MilitaryAircraft implements Aircraft {
     }
 }
 
-export class FighterJet extends MilitaryAircraft {
-    public constructor(model: string, speed: number) {
+export interface JetEngine {
+    startJetEngine(): string;
+}
+
+export class FighterJet extends MilitaryAircraft implements JetEngine {
+    constructor(model: string, speed: number) {
         super(model, speed);
     }
 
@@ -34,10 +36,14 @@ export class FighterJet extends MilitaryAircraft {
     public attack(): string {
         return this.isArmed() ? `${this.model} launches air-to-air missiles!` : 'Master arms off';
     }
+
+    public startJetEngine(): string {
+        return `${this.model} jet engine started.`;
+    }
 }
 
 export class Bomber extends MilitaryAircraft {
-    public constructor(model: string, speed: number) {
+    constructor(model: string, speed: number) {
         super(model, speed);
     }
 
@@ -50,8 +56,8 @@ export class Bomber extends MilitaryAircraft {
     }
 }
 
-export class AttackAircraft extends MilitaryAircraft {
-    public constructor(model: string, speed: number) {
+export class AttackAircraft extends MilitaryAircraft implements JetEngine {
+    constructor(model: string, speed: number) {
         super(model, speed);
     }
 
@@ -61,5 +67,9 @@ export class AttackAircraft extends MilitaryAircraft {
 
     public attack(): string {
         return this.isArmed() ? `${this.model} performs a ground-attack strike!` : 'Master arms off';
+    }
+
+    public startJetEngine(): string {
+        return `${this.model} jet engine started.`;
     }
 }
