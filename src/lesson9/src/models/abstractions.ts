@@ -3,7 +3,7 @@ export abstract class MilitaryAircraft {
     public speed: number;
     private masterArm = false;
 
-    constructor(model: string, speed: number) {
+    public constructor(model: string, speed: number) {
         this.model = model;
         this.speed = speed;
     }
@@ -25,7 +25,7 @@ export interface JetEngine {
 }
 
 export class FighterJet extends MilitaryAircraft implements JetEngine {
-    constructor(model: string, speed: number) {
+    public constructor(model: string, speed: number) {
         super(model, speed);
     }
 
@@ -43,7 +43,7 @@ export class FighterJet extends MilitaryAircraft implements JetEngine {
 }
 
 export class Bomber extends MilitaryAircraft {
-    constructor(model: string, speed: number) {
+    public constructor(model: string, speed: number) {
         super(model, speed);
     }
 
@@ -57,7 +57,7 @@ export class Bomber extends MilitaryAircraft {
 }
 
 export class AttackAircraft extends MilitaryAircraft implements JetEngine {
-    constructor(model: string, speed: number) {
+    public constructor(model: string, speed: number) {
         super(model, speed);
     }
 
