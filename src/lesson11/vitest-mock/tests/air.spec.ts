@@ -1,15 +1,13 @@
-import { AttackAircraft, FighterJet } from 'src/models/abstractions';
+import { FighterJet } from 'src/models/abstractions';
 import { vi } from 'vitest';
 import { engageAircraft, startJetEngine } from '../src/utils';
 
 describe('Aircraft Functions Tests with Mocks', () => {
     let f16: FighterJet;
-    let a10: AttackAircraft;
     let consoleSpy: ReturnType<typeof vi.spyOn>;
 
     beforeEach(() => {
         f16 = new FighterJet('F-16 Falcon', 2400);
-        a10 = new AttackAircraft('A-10 Thunderbolt II', 706);
         consoleSpy = vi.spyOn(console, 'log');
     });
 

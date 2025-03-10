@@ -1,0 +1,386 @@
+{
+	"info": {
+		"_postman_id": "7598177a-393a-4811-acbe-59d6c4eaa23a",
+		"name": "WeatherApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4578664"
+	},
+	"item": [
+		{
+			"name": "Сurrent weather",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify location details\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.location.name).to.eql(\"Port Coquitlam\");\r",
+							"    pm.expect(jsonData.location.country).to.eql(\"Canada\");\r",
+							"    pm.expect(jsonData.location.tz_id).to.eql(\"America/Vancouver\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify current weather conditions\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.current).to.have.property('temp_c').that.is.a('number');\r",
+							"    pm.expect(jsonData.current.condition.text).to.eql(\"Sunny\");\r",
+							"    pm.expect(jsonData.current.humidity).to.be.within(0, 100);\r",
+							"    pm.expect(jsonData.current.is_day).to.be.oneOf([0, 1]);\r",
+							"    pm.expect(jsonData.current.wind_kph).to.be.a('number');\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Verify temperature conversions\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    let calculatedFahrenheit = (jsonData.current.temp_c * 9/5) + 32;\r",
+							"    pm.expect(jsonData.current.temp_f).to.be.closeTo(calculatedFahrenheit, 0.1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check presence and format of localtime\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(jsonData.location.localtime).to.match(/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}$/);\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{weather_url}}/current.json?q=V3B 0K9&key={{api_key}}",
+					"host": [
+						"{{weather_url}}"
+					],
+					"path": [
+						"current.json"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "V3B 0K9"
+						},
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://api.weatherapi.com/v1/current.json?q=Canada&key=d2d76b38fbcf4965b8713202250402' \\\r\n  -H 'accept: application/json'"
+			},
+			"response": []
+		},
+		{
+			"name": "Timezone",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response structure includes 'location'\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"location\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate location details\", function () {\r",
+							"    const location = pm.response.json().location;\r",
+							"    pm.expect(location.name).to.eql(\"Ottawa\");\r",
+							"    pm.expect(location.region).to.eql(\"Ontario\");\r",
+							"    pm.expect(location.country).to.eql(\"Canada\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate location coordinates\", function () {\r",
+							"    const location = pm.response.json().location;\r",
+							"    pm.expect(location.lat).to.be.a(\"number\").and.to.eql(45.417);\r",
+							"    pm.expect(location.lon).to.be.a(\"number\").and.to.eql(-75.7);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate timezone ID\", function () {\r",
+							"    const tz_id = pm.response.json().location.tz_id;\r",
+							"    pm.expect(tz_id).to.eql(\"America/Toronto\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Validate localtime format\", function () {\r",
+							"    const localtime = pm.response.json().location.localtime;\r",
+							"    pm.expect(localtime).to.match(/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}$/);\r",
+							"});\r",
+							"\r",
+							"// Ensure localtime_epoch is a number\r",
+							"pm.test(\"Validate localtime_epoch is a number\", function () {\r",
+							"    const localtimeEpoch = pm.response.json().location.localtime_epoch;\r",
+							"    pm.expect(localtimeEpoch).to.be.a(\"number\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{weather_url}}/timezone.json?q=Canada&key={{api_key}}",
+					"host": [
+						"{{weather_url}}"
+					],
+					"path": [
+						"timezone.json"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Canada"
+						},
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://api.weatherapi.com/v1/timezone.json?q=Canada&key=d2d76b38fbcf4965b8713202250402' \\\r\n  -H 'accept: application/json'"
+			},
+			"response": []
+		},
+		{
+			"name": "Ip",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Verify response status code is 200\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"// Validate response structure contains 'ip', 'country_name', and 'city'\r",
+							"pm.test(\"Response structure validation\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.all.keys(\r",
+							"        \"ip\", \"type\", \"continent_code\", \"continent_name\", \r",
+							"        \"country_code\", \"country_name\", \"is_eu\", \"geoname_id\",\r",
+							"        \"city\", \"region\", \"lat\", \"lon\", \"tz_id\", \r",
+							"        \"localtime_epoch\", \"localtime\"\r",
+							"    );\r",
+							"});\r",
+							"\r",
+							"// Validate IP address and type\r",
+							"pm.test(\"Validate IP address and type\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.ip).to.eql(\"109.202.118.0\");\r",
+							"    pm.expect(jsonData.type).to.eql(\"ipv4\");\r",
+							"});\r",
+							"\r",
+							"// Verify continent details\r",
+							"pm.test(\"Validate continent information\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.continent_code).to.eql(\"EU\");\r",
+							"    pm.expect(jsonData.continent_name).to.eql(\"Europe\");\r",
+							"});\r",
+							"\r",
+							"// Validate country details\r",
+							"pm.test(\"Validate country information\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.country_code).to.eql(\"IE\");\r",
+							"    pm.expect(jsonData.country_name).to.eql(\"Ireland\");\r",
+							"    pm.expect(jsonData.is_eu).to.eql(\"true\");\r",
+							"});\r",
+							"\r",
+							"// Validate city and region details\r",
+							"pm.test(\"Validate city and region information\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.city).to.eql(\"Dublin\");\r",
+							"    pm.expect(jsonData.region).to.eql(\"Dublin\");\r",
+							"});\r",
+							"\r",
+							"// Validate geolocation coordinates\r",
+							"pm.test(\"Validate latitude and longitude\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.lat).to.eql(53.3498);\r",
+							"    pm.expect(jsonData.lon).to.eql(-6.2603100000000005);\r",
+							"});\r",
+							"\r",
+							"// Validate timezone ID\r",
+							"pm.test(\"Validate timezone ID\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.tz_id).to.eql(\"Europe/Dublin\");\r",
+							"});\r",
+							"\r",
+							"// Validate localtime format (YYYY-MM-DD HH:mm)\r",
+							"pm.test(\"Validate localtime format\", function () {\r",
+							"    const localtime = pm.response.json().localtime;\r",
+							"    pm.expect(localtime).to.match(/^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}$/);\r",
+							"});\r",
+							"\r",
+							"// Validate localtime_epoch is a numeric value\r",
+							"pm.test(\"Validate localtime_epoch is a number\", function () {\r",
+							"    const localtimeEpoch = pm.response.json().localtime_epoch;\r",
+							"    pm.expect(localtimeEpoch).to.be.a(\"number\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "accept",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{weather_url}}/ip.json?q={{ip}}&key={{api_key}}",
+					"host": [
+						"{{weather_url}}"
+					],
+					"path": [
+						"ip.json"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{ip}}"
+						},
+						{
+							"key": "key",
+							"value": "{{api_key}}"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl -X 'GET' \\\r\n  'https://api.weatherapi.com/v1/ip.json?q=109.202.118.0&key=d2d76b38fbcf4965b8713202250402' \\\r\n  -H 'accept: application/json'"
+			},
+			"response": []
+		},
+		{
+			"name": "Create users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Verify response status code is 201 Created\r",
+							"pm.test(\"Status code is 201\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// Validate response contains required fields\r",
+							"pm.test(\"Response includes required fields\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData).to.have.property(\"id\");\r",
+							"    pm.expect(jsonData).to.have.property(\"createdAt\");\r",
+							"    pm.expect(jsonData).to.have.property(\"job\");\r",
+							"    pm.expect(jsonData).to.have.property(\"name\"); // in case name is also returned\r",
+							"});\r",
+							"\r",
+							"// Validate the values of returned fields\r",
+							"pm.test(\"Validate response field values\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.job).to.eql(\"leader\");\r",
+							"    pm.expect(jsonData.name || \"\").not.to.be.empty; // Optional check if name is returned\r",
+							"    pm.expect(jsonData.id).to.be.a(\"string\");\r",
+							"});\r",
+							"\r",
+							"// Verify the status code is 201 (Created)\r",
+							"pm.test(\"Response status is 201 Created\", function () {\r",
+							"    pm.response.to.have.status(201);\r",
+							"});\r",
+							"\r",
+							"// Validate the 'createdAt' timestamp format\r",
+							"pm.test(\"Validate 'createdAt' timestamp format\", function () {\r",
+							"    const createdAt = pm.response.json().createdAt;\r",
+							"    pm.expect(createdAt).to.match(/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$/);\r",
+							"});\r",
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Name</th>\r",
+							"        <th>Job</th>\r",
+							"        <th>ID</th>\r",
+							"        <th>Created At</th>\r",
+							"    </tr>\r",
+							"    <tr>\r",
+							"        <td>{{response.name}}</td>\r",
+							"        <td>{{response.job}}</td>\r",
+							"        <td>{{response.id}}</td>\r",
+							"        <td>{{response.createdAt}}</td>\r",
+							"    </tr>\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json()}\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"morpheus\",\r\n    \"job\": \"leader\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
