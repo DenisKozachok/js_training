@@ -24,5 +24,8 @@
     "typescript": "^5.5.3",
     "vitest": "^3.0.8"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "ts-sinon": "^2.0.2"
+  }
 }
