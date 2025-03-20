@@ -2,7 +2,7 @@ import { describe, expect, test } from 'vitest';
 import { FetchApiService } from '../src/services/fetch-api-service';
 import { UsersApi } from '../src/apis/reqres-api/users.api';
 
-describe('Get user api', () => {
+describe('Get /users/id', () => {
 
     const fetchApi = new FetchApiService("https://reqres.in/api/");
     const usersApi = new UsersApi(fetchApi);
